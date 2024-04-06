@@ -18,9 +18,7 @@ public abstract class Customer {
 
 
     public Customer(String id, String fullName, String insuranceId, List<String> claimIds) {
-        if (!isValidId(id)) {
-            throw new IllegalArgumentException("Invalid ID format. ID must be in the format 'c-xxxxxxx' where 'x' is a digit.");
-        }
+
         this.id = id;
         this.fullName = fullName;
         this.insuranceId = insuranceId;
@@ -33,12 +31,7 @@ public abstract class Customer {
     public String getId() {
         return id;
     }
-    public void setId(String id) {
-        if (!isValidId(id)) {
-            throw new IllegalArgumentException("Invalid ID format. ID must be in the format 'c-xxxxxxx' where 'x' is a digit.");
-        }
-        this.id = id;
-    }
+
 
     public String getFullName() {
         return fullName;
@@ -48,24 +41,12 @@ public abstract class Customer {
         return insuranceId;
     }
 
-    public void setInsuranceId(String insuranceId) {
-        this.insuranceId = insuranceId;
-    }
 
-    public List<String> getClaimIds() {
-        return claimIds;
-    }
-
-    public void setClaimIds(List<String> claimIds) {
-        this.claimIds = claimIds;
-    }
     public List<Claim> getClaimList() {
         return Claimlist;
     }
 
-    public void setClaimlist(List<Claim> claimlist) {
-        Claimlist = claimlist;
-    }
+
     public void addnewclaim(Claim claim) {
         this.Claimlist.add(claim);
     }
