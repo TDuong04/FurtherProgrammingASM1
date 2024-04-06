@@ -1,9 +1,6 @@
 import Controller.ClaimController;
+import Model.*;
 import Viewer.ClaimView;
-import Model.Claim;
-import Model.ClaimProcessManagerImp;
-import Model.Customer;
-import Model.InsuranceCard;
 import Viewer.CustomerViewer;
 
 import java.util.HashMap;
@@ -14,7 +11,14 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        ClaimProcessManagerImp manager = new ClaimProcessManagerImp();
+        LoadData loader = new LoadData();
+
+        // Load the data
+        List<Customer> customers = loader.loadCustomersFromFile("src/customers.txt");
+        List<Claim> claims = loader.loadClaims(customers);
+        loader.linkClaimsToCustomers(customers, claims);
+
+        ClaimProcessManagerImp manager = new ClaimProcessManagerImp(customers, claims);
 
         ClaimController controller = new ClaimController(manager, null);
         ClaimView view = new ClaimView(controller);

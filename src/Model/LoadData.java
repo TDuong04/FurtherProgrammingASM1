@@ -50,12 +50,15 @@ public class LoadData {
     public static List<Customer> loadCustomersFromFile(String filename) {
         List<Customer> customers = new ArrayList<>();
         List<PolicyHolder> policyHolders = new ArrayList<>();
-        List<Dependent> dependents = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
+                if (parts.length < 5) {
+                    System.out.println("Invalid line format: " + line);
+                    continue;
+                }
                 String id = parts[0];
                 String fullName = parts[1];
                 String insuranceId = parts[2];
@@ -66,28 +69,8 @@ public class LoadData {
                     PolicyHolder policyHolder = new PolicyHolder(id, fullName, insuranceId, claimIds, new ArrayList<>());
                     customers.add(policyHolder);
                     policyHolders.add(policyHolder);
-                } else if ("Dependent".equals(customerType)) {
-                    if (parts.length >= 5) {
-                        String policyHolderId = parts[5];
-                        Dependent dependent = new Dependent(id, fullName, insuranceId, claimIds, policyHolderId);
-                        customers.add(dependent);
-                        dependents.add(dependent);
-                    } else {
-                        throw new IllegalArgumentException("Missing policy holder ID for dependent: " + id);
-                    }
                 } else {
-                    throw new IllegalArgumentException("Invalid customer type: " + customerType);
-                }
-            }
-
-            for (Dependent dependent : dependents) {
-                PolicyHolder policyHolder = policyHolders.stream()
-                        .filter(holder -> holder.getId().equals(dependent.getPolicyHolderId()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (policyHolder != null) {
-                    policyHolder.getDependents().add(dependent);
+                    System.out.println("Invalid customer type: " + customerType);
                 }
             }
         } catch (IOException e) {
