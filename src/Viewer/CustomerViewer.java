@@ -10,13 +10,15 @@ import java.util.Map;
 
 public class CustomerViewer {
 
-    public void displayCustomer(Customer customer, Map<String, Claim> claimsMap) {
+
+    public void displayCustomer(Customer customer) {
         System.out.println("Customer ID: " + customer.getId());
         System.out.println("Full Name: " + customer.getFullName());
         System.out.println("Insurance ID: " + customer.getInsuranceId());
         System.out.println("Claims:");
-        for (String claimId : customer.getClaimIds()) {
-            System.out.println("- " + claimId);
+        System.out.println("Number of claims: " + customer.getClaimList().size()); // Print out the size of the ClaimList
+        for (Claim claim : customer.getClaimList()) {
+            System.out.println("- " + claim.getId());
         }
         if (customer instanceof PolicyHolder) {
             System.out.println("Dependents:");
@@ -28,15 +30,6 @@ public class CustomerViewer {
                     System.out.println("- Dependent ID: " + dependent.getId());
                     System.out.println("  Full Name: " + dependent.getFullName());
                 }
-            }
-        }
-        for (String claimId : customer.getClaimIds()) {
-            Claim claim = claimsMap.get(claimId);
-            if (claim != null) {
-                System.out.println("Claim ID: " + claim.getId());
-                System.out.println("Exam Date: " + claim.getExamDate());
-                System.out.println("Claim Amount: " + claim.getClaimAmount());
-                System.out.println("Status: " + claim.getStatus());
             }
         }
     }

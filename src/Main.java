@@ -9,35 +9,38 @@ import Viewer.CustomerViewer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
 
-        Map<String, InsuranceCard> insuranceCards = new HashMap<>();
-        Map<String, Claim> claims = new HashMap<>();
 
-        List<Customer> customers = Customer.loadCustomersFromFile("src/customers.txt");
+        Map<String, InsuranceCard> insuranceCards = new HashMap<>();
 
         ClaimProcessManagerImp claimProcessManager = new ClaimProcessManagerImp();
+
+        List<Customer> customers = ClaimProcessManagerImp.loadCustomersFromFile("src/customers.txt");
+
         ClaimView claimView = new ClaimView();
         ClaimController claimController = new ClaimController(claimProcessManager, claimView);
 
-        claimProcessManager.loadClaims();
-
+        claimProcessManager.loadClaims(customers);
+        claimProcessManager.linkClaimsToCustomers(customers);
 
         CustomerViewer viewer = new CustomerViewer();
         for (Customer customer : customers) {
-            viewer.displayCustomer(customer, claims);
+            viewer.displayCustomer(customer);
         }
 
-        for (Claim claim : claimProcessManager.getAll()) {
-            claimView.displayClaim(claim, customers);
-        }
-        claimProcessManager.deleteClaim("f-1234567893", customers);
-        System.out.println("After deleting claim:");
-        for (Claim claim : claimProcessManager.getAll()) {
-            claimView.displayClaim(claim, customers);
-        }
+
+//        for (Claim claim : claimProcessManager.getAll()) {
+//            claimView.displayClaim(claim, customers);
+//        }
+//        claimProcessManager.deleteClaim("f-1234567893", customers);
+//        System.out.println("After deleting claim:");
+//        for (Claim claim : claimProcessManager.getAll()) {
+//            claimView.displayClaim(claim, customers);
+//        }
 
     }
 
