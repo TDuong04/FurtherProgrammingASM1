@@ -13,6 +13,7 @@ public class Customer {
     protected String fullName;
     protected String insuranceId;
     protected List<String> claimIds;
+    protected List<Claim> Claimlist;
 
 
     public Customer(String id, String fullName, String insuranceId, List<String> claimIds) {
@@ -23,6 +24,7 @@ public class Customer {
         this.fullName = fullName;
         this.insuranceId = insuranceId;
         this.claimIds = claimIds;
+        this.Claimlist = new ArrayList<>();
     }
     private boolean isValidId(String id) {
         return Pattern.matches("c-\\d{7}", id);
@@ -56,37 +58,14 @@ public class Customer {
     public void setClaimIds(List<String> claimIds) {
         this.claimIds = claimIds;
     }
-
-    public static List<Customer> loadCustomersFromFile(String filename) {
-        List<Customer> customers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                String id = parts[0];
-                String fullName = parts[1];
-                String insuranceId = parts[2];
-                List<String> claimIds = Arrays.asList(parts[3].split(";"));
-                boolean isPolicyHolder = Boolean.parseBoolean(parts[4]);
-                if (isPolicyHolder) {
-                    List<String> dependentIds = new ArrayList<>();
-                    List<Dependent> dependents = new ArrayList<>();
-                    if (parts.length > 5) {
-                        dependentIds = Arrays.asList(parts[5].split(";"));
-                        for (String dependentId : dependentIds) {
-                            dependents.add(new Dependent(dependentId, fullName, insuranceId, claimIds));
-                        }
-                    }
-                    customers.add(new PolicyHolder(id, fullName, insuranceId, claimIds, dependents));
-                } else {
-                    customers.add(new Customer(id, fullName, insuranceId, claimIds));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("ooby dooo i wanna be like uuu " + e.getMessage());
-        }
-        return customers;
+    public List<Claim> getClaimList() {
+        return Claimlist;
     }
 
-
+    public void setClaimlist(List<Claim> claimlist) {
+        Claimlist = claimlist;
+    }
+    public void addnewclaim(Claim claim) {
+        this.Claimlist.add(claim);
+    }
 }

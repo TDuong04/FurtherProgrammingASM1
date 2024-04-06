@@ -29,6 +29,17 @@ public class Claim {
         this.status = status;
         this.receiverBankingInfo = receiverBankingInfo;
     }
+    public Claim(String id, Date claimDate, Customer insuredPerson, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, BankingInfo receiverBankingInfo) {
+        this.id = id;
+        this.claimDate = claimDate;
+        this.insuredPerson = insuredPerson;
+        this.cardNumber = cardNumber;
+        this.examDate = examDate;
+        this.documents = documents;
+        this.claimAmount = claimAmount;
+        this.status = status;
+        this.receiverBankingInfo = receiverBankingInfo;
+    }
 
 
     private boolean isValidId(String id) {
