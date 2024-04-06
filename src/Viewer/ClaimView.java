@@ -136,7 +136,7 @@ public class ClaimView {
         Claim FindclaimbyID = null;
         while (true) {
             System.out.print("Enter the ID of the claim you want to delete:");
-            System.out.print("Please enter the format of c-xxxxxxx(7 xs):");
+            System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
 
             claimId = in.nextLine();
 
@@ -178,6 +178,27 @@ public class ClaimView {
             }
         }
     }
+    public void getOneClaimForm()
+    {
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║    SEARCH CLAIM VIA ID FORM     ║");
+        System.out.println("╚═════════════════════════════════╝");
+
+        System.out.print("Enter the ID of the claim you want to get:");
+        System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
+        String claimId = in.nextLine();
+
+        Claim specifiedClaim = controller.getClaim(claimId);
+
+        if (specifiedClaim == null)
+        {
+            System.out.println("Cannot Find Claim with ID: " + claimId);
+        } else
+        {
+            displayClaim(specifiedClaim);
+        }
+    }
+
 
 
 }
