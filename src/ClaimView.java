@@ -1,12 +1,25 @@
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ClaimView {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    public void displayClaim(Claim claim) {
+    public void displayClaim(Claim claim, List<Customer> customers) {
         System.out.println("Claim ID: " + claim.getId());
         System.out.println("Claim Date: " + sdf.format(claim.getClaimDate()));
-        System.out.println("Insured Person: "  + claim.getInsuredPerson().getFullName());
+        // Find the Customer object with the matching customerId
+        Customer customer = customers.stream()
+                .filter(c -> c.getId().equals(claim.getCustomerId()))
+                .findFirst()
+                .orElse(null);
+
+        if (customer != null) {
+            System.out.println("Customer ID: " + customer.getId());
+            System.out.println("Customer Name: " + customer.getFullName());
+            // Print other customer details...
+        } else {
+            System.out.println("Customer with ID " + claim.getCustomerId() + " not found.");
+        }
         System.out.println("Card Number: " + claim.getCardNumber());
         System.out.println("Exam Date: " + sdf.format(claim.getExamDate()));
         System.out.println("Claim Amount: " + claim.getClaimAmount());

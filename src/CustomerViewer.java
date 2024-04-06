@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerViewer {
-    // Method to display customer information
+
     public void displayCustomer(Customer customer, Map<String, Claim> claimsMap) {
         System.out.println("Customer ID: " + customer.getId());
         System.out.println("Full Name: " + customer.getFullName());
@@ -21,6 +21,15 @@ public class CustomerViewer {
                     System.out.println("- Dependent ID: " + dependent.getId());
                     System.out.println("  Full Name: " + dependent.getFullName());
                 }
+            }
+        }
+        for (String claimId : customer.getClaimIds()) {
+            Claim claim = claimsMap.get(claimId);
+            if (claim != null) {
+                System.out.println("Claim ID: " + claim.getId());
+                System.out.println("Exam Date: " + claim.getExamDate());
+                System.out.println("Claim Amount: " + claim.getClaimAmount());
+                System.out.println("Status: " + claim.getStatus());
             }
         }
     }

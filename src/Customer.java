@@ -25,17 +25,12 @@ public class Customer {
         this.insuranceId = insuranceId;
         this.claimIds = claimIds;
     }
-
-    // Validates the customer ID format
     private boolean isValidId(String id) {
         return Pattern.matches("c-\\d{7}", id);
     }
-
-    // Getters and setters
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         if (!isValidId(id)) {
             throw new IllegalArgumentException("Invalid ID format. ID must be in the format 'c-xxxxxxx' where 'x' is a digit.");
