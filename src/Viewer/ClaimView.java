@@ -7,6 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ClaimView {
+    public void AdminScreen()
+    {
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║  ADMIN CLAIM PROCCESS MANAGER   ║");
+        System.out.println("╠═════════════════════════════════╣");
+        System.out.println("║ Enter 1: Add Claim              ║");
+        System.out.println("║ Enter 2: Update Claim           ║");
+        System.out.println("║ Enter 3: Delete Claim           ║");
+        System.out.println("║ Enter 4: Get Claim via ID       ║");
+        System.out.println("║ Enter 5: Get All Claims         ║");
+        System.out.println("║ Enter 6: Exit                   ║");
+        System.out.println("╚═════════════════════════════════╝");
+    }
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public void displayClaim(Claim claim, List<Customer> customers) {
