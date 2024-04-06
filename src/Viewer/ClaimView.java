@@ -198,6 +198,27 @@ public class ClaimView {
             displayClaim(specifiedClaim);
         }
     }
+    public void getAllClaims()
+    {
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║        GETTING ALL CLAIMS       ║");
+        System.out.println("╚═════════════════════════════════╝");
+
+
+        List<Claim> claims = controller.getAllClaims();
+
+        if (claims.isEmpty())
+        {
+            System.out.println("No claims found.");
+        } else
+        {
+            for (Claim claim : claims)
+            {
+                displayClaim(claim);
+                System.out.println("------------------------");
+            }
+        }
+    }
 
 
 
