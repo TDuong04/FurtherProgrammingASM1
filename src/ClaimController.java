@@ -1,9 +1,12 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 public class ClaimController {
+    private List<Claim> claims = new ArrayList<>();
     private ClaimProcessManagerImp claimProcessManager;
     private ClaimView claimView;
 
@@ -46,18 +49,5 @@ public class ClaimController {
         claimProcessManager.delete(id);
     }
 
-    public void displayClaim(String id) {
-        Claim claim = claimProcessManager.getOne(id);
-        if (claim != null) {
-            claimView.displayClaim(claim);
-        } else {
-            System.out.println("Claim with ID " + id + " not found.");
-        }
-    }
 
-    public void displayAllClaims() {
-        for (Claim claim : claimProcessManager.getAll()) {
-            claimView.displayClaim(claim);
-        }
-    }
 }

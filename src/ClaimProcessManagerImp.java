@@ -51,7 +51,7 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
     public List<Claim> getAll() {
         return new ArrayList<>(claims);
     }
-    public void loadClaims (List<Customer> customers) {
+    public void loadClaims () {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/claims.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -74,6 +74,7 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
             System.out.println("An error occurred while reading from file: " + e.getMessage());
         }
     }
+
 
     // Constructor
 
