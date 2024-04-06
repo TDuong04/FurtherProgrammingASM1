@@ -8,10 +8,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Customer {
+public abstract class Customer {
     protected String id;
     protected String fullName;
     protected String insuranceId;
+    protected InsuranceCard insuranceCard;
     protected List<String> claimIds;
     protected List<Claim> Claimlist;
 
@@ -67,5 +68,14 @@ public class Customer {
     }
     public void addnewclaim(Claim claim) {
         this.Claimlist.add(claim);
+    }
+
+    public void removeClaim(Claim findclaimbyID) {
+        this.Claimlist.remove(findclaimbyID);
+    }
+
+    public void setInsuranceCard(InsuranceCard matchingCard) {
+        this.insuranceCard = matchingCard;
+
     }
 }

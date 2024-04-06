@@ -79,4 +79,16 @@ public class InsuranceCard {
         }
         return insuranceCards;
     }
+    public void linkCustomersToInsuranceCards(List<Customer> customers, List<InsuranceCard> insuranceCards) {
+        for (Customer customer : customers) {
+            InsuranceCard matchingCard = insuranceCards.stream()
+                    .filter(card -> card.getCardNumber().equals(customer.getInsuranceId()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (matchingCard != null) {
+                customer.setInsuranceCard(matchingCard);
+            }
+        }
+    }
 }
