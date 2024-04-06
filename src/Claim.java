@@ -6,18 +6,31 @@ import java.util.regex.Pattern;
 
 
 public class Claim {
-    private String id; // Format: f-numbers; 10 numbers
+    private String id;
     private Date claimDate;
     private Customer insuredPerson;
+    private String customerId;
+
     private String cardNumber;
     private Date examDate;
-    private List<String> documents; // Format: ClaimId_CardNumber_DocumentName.pdf
+    private List<String> documents;
     private double claimAmount;
-    private String status; // New, Processing, Done
+    private String status;
     private BankingInfo receiverBankingInfo;
 
+    public Claim(String id, Date claimDate, String customerId, String cardNumber, Date examDate, double claimAmount, String status, BankingInfo receiverBankingInfo, List<String> documents) {
+        this.id = id;
+        this.claimDate = claimDate;
+        this.customerId = customerId;
+        this.cardNumber = cardNumber;
+        this.examDate = examDate;
+        this.documents = documents;
+        this.claimAmount = claimAmount;
+        this.status = status;
+        this.receiverBankingInfo = receiverBankingInfo;
+    }
 
-    // Validates the claim ID format
+
     private boolean isValidId(String id) {
         return Pattern.matches("f-\\d{10}", id);
     }
@@ -26,27 +39,20 @@ public class Claim {
     public String getId() {
         return id;
     }
-    public Claim(String line) {
-        String[] parts = line.split(",");
-        if (parts.length != 10) {
-            throw new IllegalArgumentException("Line should contain 10 parts separated by commas");
-        }
-        this.id = parts[0];
-        try {
-            this.claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[1]);
-            // Assuming parts[2] is the insuredPersonId, which is not directly used in Claim
-            this.cardNumber = parts[3];
-            this.examDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4]);
-            this.claimAmount = Double.parseDouble(parts[5]);
-            this.status = parts[6];
-            // Assuming parts[7], parts[8], and parts[9] are bank, name, and number for BankingInfo
-            this.receiverBankingInfo = new BankingInfo(parts[7], parts[8], parts[9]);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Date should be in the format yyyy-MM-dd", e);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Claim amount should be a valid number", e);
-        }
+    // Constructor
+    public Claim(String id, Date claimDate, String customerId, Customer insuredPerson, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, BankingInfo receiverBankingInfo) {
+        this.id = id;
+        this.claimDate = claimDate;
+        this.customerId = customerId;
+        this.insuredPerson = insuredPerson;
+        this.cardNumber = cardNumber;
+        this.examDate = examDate;
+        this.documents = documents;
+        this.claimAmount = claimAmount;
+
     }
+
+
 
     public Date getClaimDate() {
         return claimDate;
@@ -79,11 +85,14 @@ public class Claim {
     public BankingInfo getReceiverBankingInfo() {
         return receiverBankingInfo;
     }
+    public String getCustomerId() {
+        return customerId;
+    }
 
     // Setters
     public void setId(String id) {
         if (!isValidId(id)) {
-            throw new IllegalArgumentException("Invalid ID format. ID must be in the format 'f-xxxxxxxxxx' where 'x' is a digit.");
+            throw new IllegalArgumentException("Invalid ID format.");
         }
         this.id = id;
     }

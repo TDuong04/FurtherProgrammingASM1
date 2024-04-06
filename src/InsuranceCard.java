@@ -8,20 +8,18 @@ import java.util.Date;
 import java.util.List;
 
 public class InsuranceCard {
-    private String cardNumber; // 10 digits
+    private String cardNumber;
     private String cardHolder;
     private String policyOwner;
     private Date expirationDate;
 
-    // Constructor
     public InsuranceCard(String cardNumber, String cardHolder, String policyOwner, Date expirationDate) {
-        setCardNumber(cardNumber); // Validates and sets the card number
+        setCardNumber(cardNumber);
         this.cardHolder = cardHolder;
         this.policyOwner = policyOwner;
         this.expirationDate = expirationDate;
     }
 
-    // Setters
     public void setCardNumber(String cardNumber) {
         if (cardNumber != null && cardNumber.matches("\\d{10}")) {
             this.cardNumber = cardNumber;
@@ -64,9 +62,9 @@ public class InsuranceCard {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
+            // Assuming the file has lines in the format: cardNumber,cardHolder,policyOwner,expirationDate
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                // Assuming the file has lines in the format: cardNumber,cardHolder,policyOwner,expirationDate
                 String cardNumber = parts[0];
                 String cardHolder = parts[1];
                 String policyOwner = parts[2];
