@@ -1,7 +1,9 @@
 package Controller;
 
+import Model.BankingInfo;
 import Model.Claim;
 import Model.ClaimProcessManagerImp;
+import Model.Customer;
 import Viewer.ClaimView;
 
 import java.text.ParseException;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClaimController {
-    private List<Claim> claims = new ArrayList<>();
+
     private ClaimProcessManagerImp claimProcessManager;
     private ClaimView claimView;
 
@@ -24,36 +26,61 @@ public class ClaimController {
     public void createClaim(Claim claim) {
         claimProcessManager.add(claim);
     }
+    public void application()
+    {
+        int choice;
+        Scanner in = new Scanner(System.in);
+        do
+        {
+            claimView.AdminScreen();
+            System.out.print("Enter your choice: ");
+            choice = in.nextInt();
+            in.nextLine();
 
-    public void updateClaimScan() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter claim ID:");
-        String id = scanner.nextLine();
-
-        System.out.println("Enter exam date (yyyy-MM-dd):");
-        String examDateString = scanner.nextLine();
-        Date examDate = null;
-        try {
-            examDate = new SimpleDateFormat("yyyy-MM-dd").parse(examDateString);
-        } catch (ParseException e) {
-            System.out.println("Invalid date format. Please enter in yyyy-MM-dd format.");
-            return;
-        }
-
-        System.out.println("Enter claim amount:");
-        double claimAmount = scanner.nextDouble();
-
-        scanner.nextLine();
-        System.out.println("Enter status:");
-        String status = scanner.nextLine();
-
-        claimProcessManager.updateClaim(id, examDate, claimAmount, status);
+            switch (choice)
+            {
+                case 1:
+                    claimView.displayNewClaimForm();
+                    break;
+                case 2:
+                    claimView.deleteClaimForm();
+                    break;
+                case 3:
+                    claimView.getOneClaimForm();
+                    break;
+                case 4:
+                    claimView.getAllClaims();
+                    break;
+                case 5:
+                    //updateclaim
+                    break;
+                case 0:
+                    System.out.println("Exiting Program");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter according to the menu.");
+            }
+            System.out.println("------------------------------------------------");
+        } while (choice != 0);
     }
+
+
 
 
     public void deleteClaim(String id) {
         claimProcessManager.delete(id);
     }
 
+    public Customer getCustomerById(String customerId) {
+        return claimProcessManager.getCustomerById(customerId);
+    }
 
+
+    public Claim getClaim(String claimId) {
+        return claimProcessManager.getOne(claimId);
+    }
+
+    public List<Claim> getAllClaims() {
+        return claimProcessManager.getAll();
+    }
 }
