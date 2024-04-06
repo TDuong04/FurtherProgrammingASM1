@@ -1,3 +1,8 @@
+package Viewer;
+
+import Model.Claim;
+import Model.Customer;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -14,9 +19,9 @@ public class ClaimView {
                 .orElse(null);
 
         if (customer != null) {
-            System.out.println("Customer ID: " + customer.getId());
+
             System.out.println("Customer Name: " + customer.getFullName());
-            // Print other customer details...
+
         } else {
             System.out.println("Customer with ID " + claim.getCustomerId() + " not found.");
         }

@@ -1,3 +1,11 @@
+import Controller.ClaimController;
+import Viewer.ClaimView;
+import Model.Claim;
+import Model.ClaimProcessManagerImp;
+import Model.Customer;
+import Model.InsuranceCard;
+import Viewer.CustomerViewer;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +24,7 @@ public class Main {
 
         claimProcessManager.loadClaims();
 
+
         CustomerViewer viewer = new CustomerViewer();
         for (Customer customer : customers) {
             viewer.displayCustomer(customer, claims);
@@ -24,5 +33,12 @@ public class Main {
         for (Claim claim : claimProcessManager.getAll()) {
             claimView.displayClaim(claim, customers);
         }
+        claimProcessManager.deleteClaim("f-1234567893", customers);
+        System.out.println("After deleting claim:");
+        for (Claim claim : claimProcessManager.getAll()) {
+            claimView.displayClaim(claim, customers);
+        }
+
     }
+
 }

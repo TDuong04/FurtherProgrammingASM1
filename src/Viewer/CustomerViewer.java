@@ -1,3 +1,10 @@
+package Viewer;
+
+import Model.Claim;
+import Model.Customer;
+import Model.Dependent;
+import Model.PolicyHolder;
+
 import java.util.List;
 import java.util.Map;
 

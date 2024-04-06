@@ -1,3 +1,5 @@
+package Model;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -76,13 +78,5 @@ public class InsuranceCard {
             System.out.println("An error occurred while reading from file: " + e.getMessage());
         }
         return insuranceCards;
-    }
-}
- class InsuranceCardViewer {
-    public void displayInsuranceCard(InsuranceCard insuranceCard) {
-        System.out.println("Card Number: " + insuranceCard.getCardNumber());
-        System.out.println("Card Holder: " + insuranceCard.getCardHolder());
-        System.out.println("Policy Owner: " + insuranceCard.getPolicyOwner());
-        System.out.println("Expiration Date: " + insuranceCard.getExpirationDate());
     }
 }

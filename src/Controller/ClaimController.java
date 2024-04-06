@@ -1,9 +1,15 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+package Controller;
+
+import Model.Claim;
+import Model.ClaimProcessManagerImp;
+import Viewer.ClaimView;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class ClaimController {
     private List<Claim> claims = new ArrayList<>();
@@ -37,7 +43,7 @@ public class ClaimController {
         System.out.println("Enter claim amount:");
         double claimAmount = scanner.nextDouble();
 
-        scanner.nextLine(); // Consume newline left-over
+        scanner.nextLine();
         System.out.println("Enter status:");
         String status = scanner.nextLine();
 

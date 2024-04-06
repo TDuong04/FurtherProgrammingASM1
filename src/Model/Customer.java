@@ -1,13 +1,12 @@
-import java.io.PrintWriter;
+package Model;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 public class Customer {
     protected String id;
