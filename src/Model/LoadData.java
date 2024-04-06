@@ -2,69 +2,19 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.PrintWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
-public class ClaimProcessManagerImp implements ClaimProcessManager {
-    public static List<Claim> claimList = new ArrayList<>();
-    public static List<Customer> customerList = new ArrayList<>();
 
-    public ClaimProcessManagerImp(List<Customer> customers, List<Claim> claims) {
-        this.customerList = customers;
-        this.claimList = claims;
-    }
 
-    @Override
-    public void add(Claim claim) {
-        claimList.add(claim);
-
-    }
-
-    @Override
-    public void updateClaim(String id, Date examDate, double claimAmount, String status) {
-        Claim claim = getOne(id);
-        if (claim != null) {
-            claim.setExamDate(examDate);
-            claim.setClaimAmount(claimAmount);
-            claim.setStatus(status);
-
-        } else {
-            System.out.println("Claim with ID " + id + " not found.");
-        }
-    }
-
-    @Override
-    public void deleteClaim(String id, List<Customer> customers) {
-
-    }
-
-    @Override
-    public void delete(String id) {
-        Claim claim = getOne(id);
-        if (claim != null) {
-            claimList.remove(claim);
-
-        }
-    }
-
-    @Override
-    public Claim getOne(String id) {
-        for (Claim claim : claimList) {
-            if (claim.getId().equals(id)) {
-                return claim;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Claim> getAll() {
-        return new ArrayList<>(claimList);
-    }
-    public void loadClaims(List<Customer> customers) {
+public class LoadData {
+    public List<Claim> loadClaims(List<Customer> customers) {
+        List<Claim> claimList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("src/claims.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -95,6 +45,7 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
         } catch (IOException | ParseException e) {
             System.out.println("An error occurred while reading from file: " + e.getMessage());
         }
+        return claimList;
     }
     public static List<Customer> loadCustomersFromFile(String filename) {
         List<Customer> customers = new ArrayList<>();
@@ -116,10 +67,14 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
                     customers.add(policyHolder);
                     policyHolders.add(policyHolder);
                 } else if ("Dependent".equals(customerType)) {
-                    String policyHolderId = parts[5];
-                    Dependent dependent = new Dependent(id, fullName, insuranceId, claimIds, policyHolderId);
-                    customers.add(dependent);
-                    dependents.add(dependent);
+                    if (parts.length >= 5) {
+                        String policyHolderId = parts[5];
+                        Dependent dependent = new Dependent(id, fullName, insuranceId, claimIds, policyHolderId);
+                        customers.add(dependent);
+                        dependents.add(dependent);
+                    } else {
+                        throw new IllegalArgumentException("Missing policy holder ID for dependent: " + id);
+                    }
                 } else {
                     throw new IllegalArgumentException("Invalid customer type: " + customerType);
                 }
@@ -141,7 +96,7 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
 
         return customers;
     }
-    public void linkClaimsToCustomers(List<Customer> customers) {
+    public void linkClaimsToCustomers(List<Customer> customers, List<Claim> claimList) {
         for (Claim claim : claimList) {
             Customer FindingCustomer = customers.stream()
                     .filter(customer -> customer.getId().equals(claim.getCustomerId()))
@@ -153,17 +108,4 @@ public class ClaimProcessManagerImp implements ClaimProcessManager {
             }
         }
     }
-
-
-    public Customer getCustomerById(String customerId) {
-        for (Customer customer : customerList){
-            if (customer.getId().equals(customerId)) {
-                return customer;
-            }
-        }
-        return null;
-    }
-
-
-
 }
