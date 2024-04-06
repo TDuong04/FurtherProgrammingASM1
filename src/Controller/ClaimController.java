@@ -1,15 +1,10 @@
 package Controller;
 
-import Model.BankingInfo;
 import Model.Claim;
 import Model.ClaimProcessManagerImp;
 import Model.Customer;
 import Viewer.ClaimView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,11 +17,11 @@ public class ClaimController {
         this.claimProcessManager = claimProcessManager;
         this.claimView = claimView;
     }
-
-    public void createClaim(Claim claim) {
-        claimProcessManager.add(claim);
+    public void setView(ClaimView view) {
+        this.claimView = view;
     }
-    public void application()
+
+    public void App()
     {
         int choice;
         Scanner in = new Scanner(System.in);
