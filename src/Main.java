@@ -1,13 +1,10 @@
 import Controller.ClaimController;
 import Model.*;
 import Viewer.ClaimView;
-import Viewer.CustomerViewer;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static Model.LoadData.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,6 +14,8 @@ public class Main {
         List<Customer> customers = loader.loadCustomersFromFile("src/customers.txt");
         List<Claim> claims = loader.loadClaims(customers);
         loader.linkClaimsToCustomers(customers, claims);
+        List<InsuranceCard> insuranceCards = loader. loadInsuranceCardsFromFile("src/insuranceCard.txt");
+        loader.linkCustomersToInsuranceCards(customers, insuranceCards);
 
         ClaimProcessManagerImp manager = new ClaimProcessManagerImp(customers, claims);
 
@@ -24,6 +23,10 @@ public class Main {
         ClaimView view = new ClaimView(controller);
         controller.setView(view);
         controller.App();
+        // Save the data when exiting
+        saveCustomersToFile("src/customers.txt", manager.getCustomers());
+        saveClaimsToFile("src/claims.txt", manager.getClaims());
+        saveInsuranceCardsToFile("src/insuranceCard.txt", insuranceCards);
     }
 
 }

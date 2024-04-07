@@ -22,11 +22,11 @@ public class ClaimView {
         System.out.println("║  ADMIN CLAIM MANAGER MENU       ║");
         System.out.println("╠═════════════════════════════════╣");
         System.out.println("║ Enter 1: Add Claim              ║");
-        System.out.println("║ Enter 2: Update Claim via ID    ║");
-        System.out.println("║ Enter 3: Delete Claim via ID    ║");
-        System.out.println("║ Enter 4: Get Claim via ID       ║");
-        System.out.println("║ Enter 5: Get All Claims         ║");
-        System.out.println("║ Enter 6: Exit                   ║");
+        System.out.println("║ Enter 2: Delete Claim via ID    ║");
+        System.out.println("║ Enter 3: Get Claim via ID       ║");
+        System.out.println("║ Enter 4: Get All Claims         ║");
+        System.out.println("║ Enter 5:Update Claim via ID     ║");
+        System.out.println("║ Enter 0: Exit                   ║");
         System.out.println("╚═════════════════════════════════╝");
     }
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -106,7 +106,7 @@ public class ClaimView {
 
         in.nextLine();
 
-        String status = "new";
+        String status = "New";
 
         System.out.println("Banking Info:");
         System.out.print("Enter bank Name: ");
@@ -147,7 +147,10 @@ public class ClaimView {
             System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
 
             claimId = in.nextLine();
-
+            while (!claimId.matches("f-\\d{10}")) {
+                System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+                claimId = in.nextLine();
+            }
             FindclaimbyID = controller.getClaim(claimId);
 
             if (FindclaimbyID == null) {
@@ -178,6 +181,7 @@ public class ClaimView {
                     controller.getCustomerById(FindclaimbyID.getInsuredPerson().getId()).removeClaim(FindclaimbyID);
                     controller.deleteClaim(claimId);
                     System.out.println("Claim deleted");
+                    return;
                 } else if (choice == 2) {
                     continue;
                 } else if (choice == 3) {
@@ -195,6 +199,10 @@ public class ClaimView {
         System.out.print("Enter the ID of the claim you want to get:");
         System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
         String claimId = in.nextLine();
+        while (!claimId.matches("f-\\d{10}")) {
+            System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+            claimId = in.nextLine();
+        }
 
         Claim specifiedClaim = controller.getClaim(claimId);
 
@@ -228,22 +236,52 @@ public class ClaimView {
         }
     }
     public void updateClaim() {
-        System.out.println("~~ Updating a claim ~~");
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║       UPDATE CLAIMS VIA ID      ║");
+        System.out.println("╚═════════════════════════════════╝");
+        Claim existingClaim = null;
+        String claimId;
+        do {
+            System.out.print("Enter the ID of the claim you want to update: ");
+            claimId = in.nextLine();
+            while (!claimId.matches("f-\\d{10}")) {
+                System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+                claimId = in.nextLine();
+            }
+            existingClaim = controller.getClaim(claimId);
 
-        System.out.print("Enter the ID of the claim you want to update: ");
-        String claimId = in.nextLine();
-        Claim existingClaim = controller.getClaim(claimId);
+            if (existingClaim == null) {
+                System.out.println("Claim with ID " + claimId + " does not exist.");
+                System.out.println("Enter 1: Continue searching");
+                System.out.println("Enter 2: Exit");
+                System.out.print("Your choice: ");
+                int choice = in.nextInt();
+                in.nextLine();
 
-        if (existingClaim == null) {
-            System.out.println("Claim with ID " + claimId + " does not exist.");
-            return;
-        }
+                if (choice == 1) {
+                    continue;
+                } else if (choice == 2) {
+                    return;
+                }
+            } else {
+                displayClaim(existingClaim);
+                System.out.println("Is this the claim you're looking for?");
+                System.out.println("Enter 1: Yes");
+                System.out.println("Enter 2: No, I want to continue searching");
+                System.out.print("Your choice: ");
+                int choice = in.nextInt();
+                in.nextLine();
 
-        // Remove the existing claim from the customer's claim list
+                if (choice == 1) {
+                    break;
+                }
+            }
+        } while (true);
+
         Customer customer = controller.getCustomerById(existingClaim.getCustomerId());
         customer.getClaimList().remove(existingClaim);
 
-        System.out.print("Enter Examination Date (format dd/mm/yyyy): ");
+        System.out.print("Enter Examination Date in format yyyy-MM-dd: ");
         String examDateStr = in.nextLine();
         Date examDate = null;
         try {
@@ -255,18 +293,23 @@ public class ClaimView {
 
         System.out.print("Enter Claim Amount: ");
         double claimAmount = in.nextDouble();
-
         in.nextLine();
 
-        System.out.print("Enter a Claim status (New,Processing,Done): ");
-        String status = in.nextLine();
+        String status;
+        do {
+            System.out.print("Enter a Claim status (New,Processing,Done): ");
+            status = in.nextLine();
+            if (status.equals(existingClaim.getStatus())) {
+                System.out.println("The entered status is the same as the current status. Please enter a new status.");
+            } else {
+                break;
+            }
+        } while (true);
 
-        // Update the existing claim
         existingClaim.setExamDate(examDate);
         existingClaim.setClaimAmount(claimAmount);
         existingClaim.setStatus(status);
 
-        // Add the updated claim back to the customer's claim list
         customer.getClaimList().add(existingClaim);
 
         System.out.println("Claim updated successfully!");

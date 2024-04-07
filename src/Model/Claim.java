@@ -2,8 +2,6 @@ package Model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
-
 
 public class Claim {
     private String id;
@@ -40,12 +38,6 @@ public class Claim {
         this.status = status;
         this.receiverBankingInfo = receiverBankingInfo;
     }
-
-
-    private boolean isValidId(String id) {
-        return Pattern.matches("f-\\d{10}", id);
-    }
-
     // Getters
     public String getId() {
         return id;
@@ -62,9 +54,6 @@ public class Claim {
         this.claimAmount = claimAmount;
 
     }
-
-
-
     public Date getClaimDate() {
         return claimDate;
     }
@@ -100,42 +89,12 @@ public class Claim {
         return customerId;
     }
 
-    // Setters
-    public void setId(String id) {
-        if (!isValidId(id)) {
-            throw new IllegalArgumentException("Invalid ID format.");
-        }
-        this.id = id;
-    }
-    public boolean areDocumentFormatsValid() {
-        String documentPattern = String.format("%s_%s_[^\\s]+\\.pdf", this.id, this.cardNumber);
-        Pattern pattern = Pattern.compile(documentPattern);
-        for (String document : this.documents) {
-            if (!pattern.matcher(document).matches()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void setClaimDate(Date claimDate) {
-        this.claimDate = claimDate;
-    }
-
     public void setInsuredPerson(Customer insuredPerson) {
         this.insuredPerson = insuredPerson;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
     public void setExamDate(Date examDate) {
         this.examDate = examDate;
-    }
-
-    public void setDocuments(List<String> documents) {
-        this.documents = documents;
     }
 
     public void setClaimAmount(double claimAmount) {
@@ -146,9 +105,6 @@ public class Claim {
         this.status = status;
     }
 
-    public void setReceiverBankingInfo(BankingInfo receiverBankingInfo) {
-        this.receiverBankingInfo = receiverBankingInfo;
-    }
 }
 
 
