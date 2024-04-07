@@ -20,6 +20,11 @@ KNOWN ISSUES:
 The system is not able to handle the case when the user input the wrong data type for the input, especially for the dates attributes that require accurate format (yyyy-MM-dd)
 replicate the issue by inputting the wrong data type for the input, for example when entering an examDate in Claim: " 12/23/2020", would responds to the function exiting out to the menu
 FEATURES:
-I. addClaim:
-about: add a new claim to the system
+I. add Claim: add a new claim to from the database
+II. delete Claim: delete a Claim from the database
+III. update Claim: update the information of a Claim
+IV. display all Claims: display all the Claims in the database
+V. display a Claim: display a specific Claim in the database
+
+
 

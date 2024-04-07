@@ -50,7 +50,10 @@ public class ClaimController {
                     claimView.updateClaim();
                     break;
                 case 0:
-                    System.out.println("Exiting Program");
+
+                    System.out.println("╔═════════════════════════════════╗");
+                    System.out.println("║          EXITING PROGRAM        ║");
+                    System.out.println("╚═════════════════════════════════╝");
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter according to the menu.");

@@ -2,8 +2,6 @@ package Model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
-
 
 public class Claim {
     private String id;

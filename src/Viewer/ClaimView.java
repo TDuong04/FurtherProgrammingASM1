@@ -147,7 +147,10 @@ public class ClaimView {
             System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
 
             claimId = in.nextLine();
-
+            while (!claimId.matches("f-\\d{10}")) {
+                System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+                claimId = in.nextLine();
+            }
             FindclaimbyID = controller.getClaim(claimId);
 
             if (FindclaimbyID == null) {
@@ -178,6 +181,7 @@ public class ClaimView {
                     controller.getCustomerById(FindclaimbyID.getInsuredPerson().getId()).removeClaim(FindclaimbyID);
                     controller.deleteClaim(claimId);
                     System.out.println("Claim deleted");
+                    return;
                 } else if (choice == 2) {
                     continue;
                 } else if (choice == 3) {
@@ -195,6 +199,10 @@ public class ClaimView {
         System.out.print("Enter the ID of the claim you want to get:");
         System.out.print("Please enter the format of f-xxxxxxxxxxx(10 xs):");
         String claimId = in.nextLine();
+        while (!claimId.matches("f-\\d{10}")) {
+            System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+            claimId = in.nextLine();
+        }
 
         Claim specifiedClaim = controller.getClaim(claimId);
 
@@ -236,6 +244,10 @@ public class ClaimView {
         do {
             System.out.print("Enter the ID of the claim you want to update: ");
             claimId = in.nextLine();
+            while (!claimId.matches("f-\\d{10}")) {
+                System.out.println("Invalid Claim ID format.  Please re-enter, example: f-1234567890.");
+                claimId = in.nextLine();
+            }
             existingClaim = controller.getClaim(claimId);
 
             if (existingClaim == null) {
