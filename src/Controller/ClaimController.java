@@ -47,7 +47,7 @@ public class ClaimController {
                     claimView.getAllClaims();
                     break;
                 case 5:
-                    //updateclaim
+                    claimView.updateClaim();
                     break;
                 case 0:
                     System.out.println("Exiting Program");
