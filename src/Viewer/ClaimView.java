@@ -11,6 +11,11 @@ import java.util.*;
 public class ClaimView {
     private Scanner in = new Scanner(System.in);
     private ClaimController controller;
+
+    public ClaimView(ClaimController controller) {
+        this.controller = controller;
+    }
+
     public void AdminScreen()
     {
         System.out.println("╔═════════════════════════════════╗");
@@ -68,8 +73,8 @@ public class ClaimView {
             System.out.print("Enter Insured Person's ID: ");
             System.out.print("Please enter the format of c-xxxxxxx(7 xs):");
             String insuredPersonId = in.nextLine();
-            controller.getCustomerById(insuredPersonId);
-             insuredPerson =  null;
+
+             insuredPerson =  controller.getCustomerById(insuredPersonId);
             if (insuredPerson == null) System.out.println("Insured Person does not exist!");
         } while (insuredPerson == null);
 
@@ -86,14 +91,15 @@ public class ClaimView {
         }
 
         List<String> documents = new ArrayList<>();
-        String document;
+        String documentName;
         do {
-            System.out.print("Enter document (or 'done' to finish): ");
-            document = in.nextLine();
-            if (!document.equals("done")) {
-                documents.add(document);
+            System.out.print("Enter document name (or 'done' to finish): ");
+            documentName = in.nextLine();
+            if (!documentName.equals("done")) {
+                String documentFileName = id + "_" + cardNumber + "_" + documentName + ".pdf";
+                documents.add(documentFileName);
             }
-        } while (!document.equals("done"));
+        } while (!documentName.equals("done"));
 
         System.out.print("Enter Claim Amount: ");
         double claimAmount = in.nextDouble();
@@ -125,7 +131,9 @@ public class ClaimView {
         );
 
 
+
         insuredPerson.addnewclaim(newClaim);
+        controller.addClaim(newClaim);
     }
     public void deleteClaimForm() {
         System.out.println("╔═════════════════════════════════╗");
@@ -219,7 +227,50 @@ public class ClaimView {
             }
         }
     }
+    public void updateClaim() {
+        System.out.println("~~ Updating a claim ~~");
 
+        System.out.print("Enter the ID of the claim you want to update: ");
+        String claimId = in.nextLine();
+        Claim existingClaim = controller.getClaim(claimId);
+
+        if (existingClaim == null) {
+            System.out.println("Claim with ID " + claimId + " does not exist.");
+            return;
+        }
+
+        // Remove the existing claim from the customer's claim list
+        Customer customer = controller.getCustomerById(existingClaim.getCustomerId());
+        customer.getClaimList().remove(existingClaim);
+
+        System.out.print("Enter Examination Date (format dd/mm/yyyy): ");
+        String examDateStr = in.nextLine();
+        Date examDate = null;
+        try {
+            examDate = new SimpleDateFormat("yyyy-MM-dd").parse(examDateStr);
+        } catch (Exception e) {
+            System.out.println("Invalid date format!");
+            return;
+        }
+
+        System.out.print("Enter Claim Amount: ");
+        double claimAmount = in.nextDouble();
+
+        in.nextLine();
+
+        System.out.print("Enter a Claim status (New,Processing,Done): ");
+        String status = in.nextLine();
+
+        // Update the existing claim
+        existingClaim.setExamDate(examDate);
+        existingClaim.setClaimAmount(claimAmount);
+        existingClaim.setStatus(status);
+
+        // Add the updated claim back to the customer's claim list
+        customer.getClaimList().add(existingClaim);
+
+        System.out.println("Claim updated successfully!");
+    }
 
 
 }

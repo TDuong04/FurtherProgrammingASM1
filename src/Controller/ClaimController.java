@@ -78,4 +78,8 @@ public class ClaimController {
     public List<Claim> getAllClaims() {
         return claimProcessManager.getAll();
     }
+
+    public void addClaim(Claim newClaim) {
+        claimProcessManager.add(newClaim);
+    }
 }
