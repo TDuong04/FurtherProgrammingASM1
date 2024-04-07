@@ -1,0 +1,25 @@
+CLAIM PROCCESS MANAGEMENT SYSTEM
+ABOUT THE PROJECT:
+The project is developed as a Insurance claim management applications to create, update and delete the Claims from an
+ existing customer base
+this system aim to provide a reliable and easy to use platform for the insurance company to manage the claims and
+customers data in a more organized way, and provide a user friendly text based UI for the users to interact with
+the application
+BUILT WITH:
+JAVA
+GETTING STARTED:
+To get a local copy up and running follow these simple steps:
+download the zip from github
+unzip the FurtherProgrammingASM1.zip
+open the project in Intellij IDEA, Eclipse or any other IDE
+run main method in the Main class
+AUTHORS:
+Huynh Thai Duong - s3978955
+
+KNOWN ISSUES:
+The system is not able to handle the case when the user input the wrong data type for the input, especially for the dates attributes that require accurate format (yyyy-MM-dd)
+replicate the issue by inputting the wrong data type for the input, for example when entering an examDate in Claim: " 12/23/2020", would responds to the function exiting out to the menu
+FEATURES:
+I. addClaim:
+about: add a new claim to the system
+
