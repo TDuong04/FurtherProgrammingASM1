@@ -1,18 +1,29 @@
+import Controller.ClaimController;
+import Model.*;
+import Viewer.ClaimView;
+import Viewer.CustomerViewer;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
+        LoadData loader = new LoadData();
 
-        Map<String, InsuranceCard> insuranceCards = new HashMap<>();
-        Map<String, Claim> claims = new HashMap<>();
+        // Load the data
+        List<Customer> customers = loader.loadCustomersFromFile("src/customers.txt");
+        List<Claim> claims = loader.loadClaims(customers);
+        loader.linkClaimsToCustomers(customers, claims);
 
-        List<Customer> customers = Customer.loadCustomersFromFile("src/customers.txt");
+        ClaimProcessManagerImp manager = new ClaimProcessManagerImp(customers, claims);
 
-        CustomerViewer viewer = new CustomerViewer();
-        for (Customer customer : customers) {
-            viewer.displayCustomer(customer, claims);
-        }
+        ClaimController controller = new ClaimController(manager, null);
+        ClaimView view = new ClaimView(controller);
+        controller.setView(view);
+        controller.App();
     }
+
 }

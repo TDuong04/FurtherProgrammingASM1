@@ -1,5 +1,5 @@
-c-0000001,Customer 1,card1,claim1;claim2;claim3,true,
-c-0000002,Customer 2,card2,f-1234567890,false,
-c-0000003,Customer 3,card3,claim3,true,c-0000002
-c-0000004,Customer 4,card4,claim4,false,
-c-0000005,Customer 5,card5,claim5,true,c-0000004
+c-0000001,Customer 1,12344567890,f-0000000001;f-0000000002,PolicyHolder,c-000001;c-0000002;c-0000003;c-0000004,
+c-0000002,Customer 2,1234567891,f-0000000003;f-0000000004,Dependent,
+c-0000003,Customer 3,1234567892,f-0000000005;f-0000000006,Dependent,
+c-0000004,Customer 4,1234567893,f-0000000007;f-0000000008,Dependent,
+

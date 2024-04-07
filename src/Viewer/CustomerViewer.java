@@ -1,15 +1,24 @@
+package Viewer;
+
+import Model.Claim;
+import Model.Customer;
+import Model.Dependent;
+import Model.PolicyHolder;
+
 import java.util.List;
 import java.util.Map;
 
 public class CustomerViewer {
-    // Method to display customer information
-    public void displayCustomer(Customer customer, Map<String, Claim> claimsMap) {
+
+
+    public void displayCustomer(Customer customer) {
         System.out.println("Customer ID: " + customer.getId());
         System.out.println("Full Name: " + customer.getFullName());
         System.out.println("Insurance ID: " + customer.getInsuranceId());
         System.out.println("Claims:");
-        for (String claimId : customer.getClaimIds()) {
-            System.out.println("- " + claimId);
+        System.out.println("Number of claims: " + customer.getClaimList().size()); // Print out the size of the ClaimList
+        for (Claim claim : customer.getClaimList()) {
+            System.out.println("- " + claim.getId());
         }
         if (customer instanceof PolicyHolder) {
             System.out.println("Dependents:");

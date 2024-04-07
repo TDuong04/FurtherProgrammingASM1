@@ -1,3 +1,4 @@
+package Model;
 
 public class BankingInfo {
     private String bank;
