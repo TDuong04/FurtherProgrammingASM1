@@ -1,3 +1,6 @@
+/**
+ * @author <Huynh Thai Duong - s3978955>
+ */
 import Controller.ClaimController;
 import Model.*;
 import Viewer.ClaimView;

@@ -1,3 +1,6 @@
+/**
+ * @author <Huynh Thai Duong - s3978955>
+ */
 package Model;
 
 import java.io.*;
